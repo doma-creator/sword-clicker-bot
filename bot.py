@@ -194,32 +194,39 @@ def messages(message):
         )
 
     elif text == t["top"]:
-        data = load_data()
+    data = load_data()
 
-        top = sorted(
-            data.items(),
-            key=lambda x: x[1]["clicks"],
-            reverse=True
-        )
+    top = sorted(
+        data.items(),
+        key=lambda x: x[1]["clicks"],
+        reverse=True
+    )
 
-        text_top = "🏆 ТОП ИГРОКОВ\n\n"
+    text_top = "🏆 ТОП ИГРОКОВ\n\n"
 
-        place = 1
+    place = 1
 
-        for user_id, info in top[:10]:
-            username = info.get("name", "player")
-            text_top += f"{place}. {username} — {round(info['clicks'])} кликов\n"
-            place += 1
-        bot.send_message(message.chat.id, text_top)
-    elif text == "🎁 Кейсы":
-                markup = types.InlineKeyboardMarkup()
+    for user_id, info in top[:10]:
+        username = info.get("name", "player")
+        text_top += f"{place}. {username} — {round(info['clicks'])} кликов\n"
+        place += 1
 
-                free_btn = types.InlineKeyboardButton(
-            "🆓 Бесплатный кейс",
-            callback_data="free_case"
-        )
+    bot.send_message(message.chat.id, text_top)
 
-        paid_btn = types.InlineKeyboardButton(
+elif text == "🎁 Кейсы":
+    markup = types.InlineKeyboardMarkup()
+
+    free_btn = types.InlineKeyboardButton(
+        "🆓 Бесплатный кейс",
+        callback_data="free_case"
+    )
+
+    paid_btn = types.InlineKeyboardButton(
+        "💰 Платный кейс (1 Sword)",
+        callback_data="paid_case"
+    )
+
+    markup.add(free_btn)
             "💰 Платный кейс (1 Sword)",
             callback_data="paid_case"
         )
