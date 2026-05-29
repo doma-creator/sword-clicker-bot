@@ -208,11 +208,11 @@ def messages(message):
         place = 1
 
         for user_id, info in top[:10]:
-        username = info.get("username", "player")
-    text_top += f"{place}. @{username} — {round(info['clicks'])} кликов\n"
-    place += 1
+            username = info.get("username", "player")
+            text_top += f"{place}. @{username} — {round(info['clicks'])} кликов\n"
+            place += 1
 
-        bot.send_message(message.chat.id, text_top)
+    bot.send_message(message.chat.id, text_top)
 
 @bot.callback_query_handler(func=lambda call: call.data == "upgrade")
 def upgrade(call):
