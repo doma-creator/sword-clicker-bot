@@ -121,6 +121,7 @@ def choose_lang(call):
 
     player = get_player(call.from_user.id)
     player["lang"] = lang
+    player["name"] = call.from_user.first_name
     save_player(call.from_user.id, player)
 
     t = texts(lang)
