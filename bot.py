@@ -212,7 +212,7 @@ def messages(message):
             place += 1
 
     bot.send_message(message.chat.id, text_top)
-elif text == "🎁 Кейсы":
+    elif text == "🎁 Кейсы":
         markup = types.InlineKeyboardMarkup()
 
         free_btn = types.InlineKeyboardButton(
