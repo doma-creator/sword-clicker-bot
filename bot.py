@@ -181,26 +181,25 @@ def messages(message):
     elif text == t["profile"]:
         sword = get_sword(player["clicks"])
 
-        bot.send_message(
+   
+                bot.send_message(
             message.chat.id,
             f"""
 👤 Профиль
 
-🗡 Меч: {sword}
-⚔ Клики: {round(player['clicks'],1)}
-🪙 Sword монет: {player['swords']}
+⚔️ Меч: {sword}
+⚔️ Клики: {round(player['clicks'],1)}
+🟡 Sword монет: {player['swords']}
 💥 Сила клика: {round(player['power'],1)}
-"""
+""")  
+    elif text == t["top"]:
+        data = load_data()
+        top = sorted(
+            data.items(),
+            key=lambda x: x[1]["clicks"],
+            reverse=True
         )
 
-    elif text == t["top"]:
-    data = load_data()
-
-    top = sorted(
-        data.items(),
-        key=lambda x: x[1]["clicks"],
-        reverse=True
-    )
 
     text_top = "🏆 ТОП ИГРОКОВ\n\n"
 
@@ -211,8 +210,7 @@ def messages(message):
         text_top += f"{place}. {username} — {round(info['clicks'])} кликов\n"
         place += 1
 
-    bot.send_message(message.chat.id, text_top)
-
+bot.send_message(message.chat.id, text_top)
 elif text == "🎁 Кейсы":
     markup = types.InlineKeyboardMarkup()
 
