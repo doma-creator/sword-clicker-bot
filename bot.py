@@ -97,7 +97,7 @@ def main_menu(lang):
     markup.add(t["click"])
     markup.add(t["shop"], t["profile"])
     markup.add(t["top"])
-
+    markup.add("🎁 Кейсы")
     return markup
 
 @bot.message_handler(commands=["start"])
@@ -212,7 +212,27 @@ def messages(message):
             place += 1
 
     bot.send_message(message.chat.id, text_top)
+elif text == "🎁 Кейсы":
+        markup = types.InlineKeyboardMarkup()
 
+        free_btn = types.InlineKeyboardButton(
+            "🆓 Бесплатный кейс",
+            callback_data="free_case"
+        )
+
+        paid_btn = types.InlineKeyboardButton(
+            "💰 Платный кейс (1 Sword)",
+            callback_data="paid_case"
+        )
+
+        markup.add(free_btn)
+        markup.add(paid_btn)
+
+        bot.send_message(
+            message.chat.id,
+            "🎁 Выбери кейс:",
+            reply_markup=markup
+        )
 @bot.callback_query_handler(func=lambda call: call.data == "upgrade")
 def upgrade(call):
     player = get_player(call.from_user.id)
@@ -229,6 +249,35 @@ def upgrade(call):
         bot.answer_callback_query(call.id, t["bought"])
     else:
         bot.answer_callback_query(call.id, t["not_enough"])
+@bot.callback_query_handler(func=lambda call: call.data == "paid_case")
+def paid_case(call):
+    player = get_player(call.from_user.id)
 
+    if player["swords"] < 1:
+        bot.answer_callback_query(call.id, "❌ Не хватает Sword")
+        return
+
+    player["swords"] -= 1
+
+    rewards = [
+        ("🪵 Деревянная рукоятка", 0.02, 0),
+        ("⛓ Железная рукоятка", 0.02, 0),
+        ("💎 Алмазная рукоятка", 0.02, 0),
+        ("🪙 0.5 Sword", 0, 0.5),
+        ("🪙 1 Sword", 0, 1),
+        ("🪙 5 Sword", 0, 5)
+    ]
+
+    reward = random.choice(rewards)
+
+    player["power"] += reward[1]
+    player["swords"] += reward[2]
+
+    save_player(call.from_user.id, player)
+
+    bot.send_message(
+        call.message.chat.id,
+        f"💰 Платный кейс открыт!\n\nВы получили:\n{reward[0]}"
+    )
 print("Bot started...")
 bot.infinity_polling()
