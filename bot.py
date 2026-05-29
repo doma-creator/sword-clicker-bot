@@ -159,13 +159,11 @@ def messages(message):
 
         sword = get_sword(player["clicks"])
 
-        bot.send_message(
-            message.chat.id,
-            f"{sword}\n\n⚔ Клики: {round(player['clicks'],1)}\n🪙 Sword: {player['swords']}\n💥 Сила клика: {round(player['power'],1)}"
+        bot.reply_to(
+    message,
+    f"{sword}\n\n⚔ Клики: {round(player['clicks'],1)}\n🪙 Sword: {player['swords']}\n💥 Сила клика: {round(player['power'],1)}"
         )
-
-    elif text == t["shop"]:
-        markup = types.InlineKeyboardMarkup()
+    
 
         btn = types.InlineKeyboardButton(
             t["upgrade"],
