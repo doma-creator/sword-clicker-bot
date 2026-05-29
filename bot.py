@@ -208,7 +208,7 @@ def messages(message):
         place = 1
 
         for user_id, info in top[:10]:
-            username = info.get("username", "player")
+            username = info.get("name", "player")
             text_top += f"{place}. @{username} — {round(info['clicks'])} кликов\n"
             place += 1
 
