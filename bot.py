@@ -210,13 +210,12 @@ def messages(message):
             username = info.get("name", "player")
             text_top += f"{place}. {username} — {round(info['clicks'])} кликов\n"
             place += 1
+            bot.send_message(message.chat.id, text_top)
+            
+            elif text == "🎁 Кейсы":
+                markup = types.InlineKeyboardMarkup()
 
-    bot.send_message(message.chat.id, text_top)
-    
-    elif text == "🎁 Кейсы":
-        markup = types.InlineKeyboardMarkup()
-
-        free_btn = types.InlineKeyboardButton(
+                free_btn = types.InlineKeyboardButton(
             "🆓 Бесплатный кейс",
             callback_data="free_case"
         )
