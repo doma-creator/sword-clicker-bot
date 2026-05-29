@@ -210,7 +210,7 @@ def messages(message):
 
         for user_id, info in top[:10]:
             username = info.get("name", "player")
-            text_top += f"{place}. @{username} — {round(info['clicks'])} кликов\n"
+            text_top += f"{place}. {username} — {round(info['clicks'])} кликов\n"
             place += 1
 
     bot.send_message(message.chat.id, text_top)
